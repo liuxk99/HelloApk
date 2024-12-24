@@ -44,6 +44,36 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    signingConfigs {
+        def errmsg="You should define KEYSTORE_FILE KEYSTORE_PASSWORD and KEY_PASSWORD in gradle.properties."
+        debug {
+            try {
+                storeFile file(KEYSTORE_FILE)
+                storePassword KEYSTORE_PASSWORD
+                keyAlias KEY_ALIAS
+                keyPassword KEY_PASSWORD
+            }
+            catch (ex) {
+                ex.printStackTrace()
+                throw new InvalidUserDataException(errmsg)
+            }
+        }
+
+        release {
+            try {
+                storeFile file("KEYSTORE_FILE")
+                storePassword KEYSTORE_PASSWORD
+                keyAlias KEY_ALIAS
+                keyPassword KEY_PASSWORD
+            }
+            catch (ex) {
+                ex.printStackTrace()
+                throw new InvalidUserDataException(errmsg)
+            }
+        }
+    }
+
 }
 
 dependencies {
